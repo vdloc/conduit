@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
-import { selectCurrentUser } from 'redux/slices/user/userSlice';
+import { selectCurrentUser } from 'redux/slices/userSlice';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function FeedTabs() {

@@ -5,7 +5,7 @@ import {
   selectCurrentUser,
   updateUserInfo,
   setUserInfo,
-} from 'redux/slices/user/userSlice';
+} from 'redux/slices/userSlice';
 import { useUpdateUserMutation } from 'services/api';
 
 export default function SettingForm() {

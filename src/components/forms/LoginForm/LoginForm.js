@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { setUserInfo } from 'redux/slices/user/userSlice';
+import { setUserInfo } from 'redux/slices/userSlice';
 import { useLoginMutation } from 'services/api';
 import { getSerializedErrorMessages } from 'utils/utils';
 import ErrorMessages from '../ErrorMessages';
