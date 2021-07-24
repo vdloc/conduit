@@ -90,7 +90,7 @@ export default function Article({ slug }) {
       <div className='container page'>
         <ArticleBody body={body} tags={tagList} />
         <hr />
-        <div class='article-actions'>
+        <div className='article-actions'>
           <ArticleActions
             slug={slug}
             following={following}

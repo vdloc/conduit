@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { setUserInfo } from 'redux/slices/userSlice';
 import { useLoginMutation } from 'services/api';
 import { getSerializedErrorMessages } from 'utils/utils';
+import { push } from 'connected-react-router';
 import ErrorMessages from '../ErrorMessages';
 
 export default function LoginForm() {
@@ -26,7 +27,7 @@ export default function LoginForm() {
       const { user } = await login(formState).unwrap();
 
       dispatch(setUserInfo(user));
-      history.push({ pathname: '/', state: { activeTab: 0 } });
+      dispatch(push({ pathname: '/', state: { activeTab: 0 } }));
     } catch (err) {
       const { status, data } = err;
 

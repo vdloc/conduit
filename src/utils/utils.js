@@ -7,7 +7,7 @@ export const getToken = () => {
   try {
     return window.localStorage.getItem(process.env.REACT_APP_TOKEN_KEY);
   } catch (e) {
-    return null;
+    return '';
   }
 };
 
@@ -16,5 +16,5 @@ export const saveToken = (token) => {
 };
 
 export const clearToken = () => {
-  window.localStorage.setItem(process.env.REACT_APP_TOKEN_KEY, null);
+  window.localStorage.setItem(process.env.REACT_APP_TOKEN_KEY, '');
 };

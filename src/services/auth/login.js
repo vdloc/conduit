@@ -10,7 +10,9 @@ const loginMutation = {
     });
     const token = loginResult?.data?.user?.token;
 
-    saveToken(token);
+    if (token) {
+      saveToken(token);
+    }
 
     return loginResult;
   },
