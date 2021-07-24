@@ -1,6 +1,6 @@
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import LoginPage from 'containers/LoginPage';
 import RegisterPage from 'containers/RegisterPage';
 import HomePage from 'containers/HomePage';
@@ -13,11 +13,13 @@ import { useEffect } from 'react';
 import { setUserInfo } from 'redux/slices/userSlice';
 import { useDispatch } from 'react-redux';
 import PrivateRoute from 'components/PrivateRoute';
+import { getToken } from 'utils/utils';
 
 function App() {
   const dispatch = useDispatch();
+  const token = getToken();
   const { data } = useGetCurrentUserQuery(undefined, {
-    skip: !window.localStorage.getItem(process.env.REACT_APP_TOKEN_KEY),
+    skip: !token,
   });
 
   useEffect(() => {
@@ -28,35 +30,33 @@ function App() {
 
   return (
     <div className='App'>
-      <Router>
-        <Header />
-        <Switch>
-          <Route path='/login'>
-            <LoginPage />
-          </Route>
-          <Route path='/register'>
-            <RegisterPage />
-          </Route>
-          <PrivateRoute path='/setting'>
-            <SettingsPage />
-          </PrivateRoute>
-          <PrivateRoute path='/editor/:slug'>
-            <EditorPage />
-          </PrivateRoute>
-          <PrivateRoute path='/editor'>
-            <EditorPage />
-          </PrivateRoute>
-          <Route path='/article/:slug'>
-            <ArticlePage />
-          </Route>
-          <Route path='/@:username'>
-            <ProfilePage />
-          </Route>
-          <Route path='/'>
-            <HomePage />
-          </Route>
-        </Switch>
-      </Router>
+      <Header />
+      <Switch>
+        <Route path='/login'>
+          <LoginPage />
+        </Route>
+        <Route path='/register'>
+          <RegisterPage />
+        </Route>
+        <PrivateRoute path='/setting'>
+          <SettingsPage />
+        </PrivateRoute>
+        <PrivateRoute path='/editor/:slug'>
+          <EditorPage />
+        </PrivateRoute>
+        <PrivateRoute path='/editor'>
+          <EditorPage />
+        </PrivateRoute>
+        <Route path='/article/:slug'>
+          <ArticlePage />
+        </Route>
+        <Route path='/@:username'>
+          <ProfilePage />
+        </Route>
+        <Route path='/'>
+          <HomePage />
+        </Route>
+      </Switch>
       <Footer />
     </div>
   );

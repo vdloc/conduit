@@ -1,12 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { createBrowserHistory } from 'history';
+import { routerMiddleware } from 'connected-react-router';
 import logger from 'redux-logger';
 import rootApi from 'services/api';
-import rootReducer from './rootReducer';
+import createRootReducer from './rootReducer';
+
+export const history = createBrowserHistory();
+const rootReducer = createRootReducer(history);
+const middlewares = [rootApi.middleware, logger, routerMiddleware(history)];
 
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(rootApi.middleware, logger),
+    getDefaultMiddleware().concat(middlewares),
   devTools: true,
 });
 

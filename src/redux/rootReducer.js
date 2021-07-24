@@ -1,11 +1,14 @@
+import { connectRouter } from 'connected-react-router';
+import { combineReducers } from 'redux';
 import userReducer from './slices/userSlice';
 import loaderReducer from './slices/loaderSlice';
 import rootApi from 'services/api';
 
-const rootReducer = {
+const createRootReducer = (history) => ({
+  router: connectRouter(history),
   user: userReducer,
   loader: loaderReducer,
-  [rootApi.reducerPath]: rootApi,
-};
+  [rootApi.reducerPath]: rootApi.reducer,
+});
 
-export default rootReducer;
+export default createRootReducer;
