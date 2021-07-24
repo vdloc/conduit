@@ -27,7 +27,8 @@ export default function Article({ slug }) {
   const [favoriteArticle] = useFavoriteArticleMutation();
   const [unfavoriteArticle] = useUnfavoriteArticleMutation();
   const [deleteComment] = useDeleteCommentMutation();
-  const { data } = useGetArticleQuery(slug);
+  const { data: { article = {}, comments = [] } = {} } =
+    useGetArticleQuery(slug);
   const {
     title,
     description,
@@ -37,8 +38,7 @@ export default function Article({ slug }) {
     favorited,
     favoritesCount,
     author: { username, image, following } = {},
-  } = data?.article || {};
-  const comments = data?.comments;
+  } = article || {};
   const isOwnedArticle = currentUser && currentUser.username === username;
 
   async function handleDeleteArticle() {

@@ -1,20 +1,20 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  selectGlobalFeedOffset,
-  setGlobalFeedOffset,
+  selectSubscribedFeedOffset,
+  setSubscribedFeedOffset,
 } from 'redux/slices/settingSlice';
-import { useGetGlobalFeedQuery } from 'services/api';
+import { useGetSubscribedFeedQuery } from 'services/api';
 import ArticleList from '../ArticleList';
 import Pagination from '../Pagination/Pagination';
 
-export default function GlobalFeed() {
+export default function SubscribedFeed() {
   const dispatch = useDispatch();
-  const globalFeedOffset = useSelector(selectGlobalFeedOffset);
-  const { data } = useGetGlobalFeedQuery({ offset: globalFeedOffset });
+  const subscribedFeedOffset = useSelector(selectSubscribedFeedOffset);
+  const { data } = useGetSubscribedFeedQuery({ offset: subscribedFeedOffset });
 
   function handlePageItemClick(pageId) {
-    dispatch(setGlobalFeedOffset(pageId - 1));
+    dispatch(setSubscribedFeedOffset(pageId - 1));
   }
 
   return data ? (
@@ -22,7 +22,7 @@ export default function GlobalFeed() {
       <ArticleList articles={data.articles} />
       <Pagination
         articlesCount={data.articlesCount}
-        offset={globalFeedOffset}
+        offset={subscribedFeedOffset}
         onPageClick={handlePageItemClick}
       />
     </>

@@ -1,25 +1,23 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  selectTagFeedOffset,
-  selectTagName,
-  setTagFeedOffset,
+  selectOwnFeedOffset,
+  setOwnFeedOffset,
 } from 'redux/slices/settingSlice';
 import { useGetGlobalFeedQuery } from 'services/api';
 import ArticleList from '../ArticleList';
 import Pagination from '../Pagination/Pagination';
 
-export default function TagFeed() {
+export default function UserOwnedFeed({ username }) {
   const dispatch = useDispatch();
-  const tagName = useSelector(selectTagName);
-  const tagFeedOffset = useSelector(selectTagFeedOffset);
+  const ownFeedOffset = useSelector(selectOwnFeedOffset);
   const { data } = useGetGlobalFeedQuery({
-    tag: tagName,
-    offset: tagFeedOffset,
+    offset: ownFeedOffset,
+    author: username,
   });
 
   function handlePageItemClick(pageId) {
-    dispatch(setTagFeedOffset(pageId - 1));
+    dispatch(setOwnFeedOffset(pageId - 1));
   }
 
   return data ? (
@@ -27,7 +25,7 @@ export default function TagFeed() {
       <ArticleList articles={data.articles} />
       <Pagination
         articlesCount={data.articlesCount}
-        offset={tagFeedOffset}
+        offset={ownFeedOffset}
         onPageClick={handlePageItemClick}
       />
     </>

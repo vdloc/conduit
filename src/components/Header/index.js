@@ -50,7 +50,7 @@ export default function Header() {
   return (
     <nav className='navbar navbar-light'>
       <div className='container'>
-        <a className='navbar-brand' href='index.html'>
+        <a className='navbar-brand' href='/'>
           conduit
         </a>
         <ul className='nav navbar-nav pull-xs-right'>

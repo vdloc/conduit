@@ -1,53 +1,64 @@
-import React from 'react';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentUser } from 'redux/slices/userSlice';
-import { Link, useLocation } from 'react-router-dom';
+import {
+  selectHomePageActiveTabId,
+  selectTagName,
+  setHomePageActiveTabId,
+} from 'redux/slices/settingSlice';
 
 export default function FeedTabs() {
-  const { state: navigationState = {} } = useLocation();
+  const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
-  const { tag: { tagName = '' } = {}, activeTab = currentUser ? 0 : 1 } =
-    navigationState || {};
+  const activeTabId = useSelector(selectHomePageActiveTabId);
+  const tagName = useSelector(selectTagName);
+
+  function handleTabClick(tabId) {
+    return (e) => {
+      e.preventDefault();
+      dispatch(setHomePageActiveTabId(tabId));
+    };
+  }
+
+  useEffect(() => {
+    dispatch(setHomePageActiveTabId(currentUser ? 0 : 1));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className='feed-toggle'>
       <ul className='nav nav-pills outline-active'>
         {currentUser ? (
           <li className='nav-item'>
-            <Link
-              className={classNames('nav-link', { active: activeTab === 0 })}
-              to={{
-                pathname: '/',
-                state: { ...navigationState, activeTab: 0 },
-              }}
+            <a
+              href=''
+              className={classNames('nav-link', { active: activeTabId === 0 })}
+              onClick={handleTabClick(0)}
             >
               Your Feed
-            </Link>
+            </a>
           </li>
         ) : null}
         <li className='nav-item'>
-          <Link
-            className={classNames('nav-link', { active: activeTab === 1 })}
-            to={{
-              pathname: '/',
-              state: { ...navigationState, activeTab: 1 },
-            }}
+          <a
+            href=''
+            className={classNames('nav-link', { active: activeTabId === 1 })}
+            onClick={handleTabClick(1)}
           >
             Global Feed
-          </Link>
+          </a>
         </li>
         {tagName ? (
           <li className='nav-item'>
-            <Link
-              className={classNames('nav-link', { active: activeTab === 2 })}
-              to={{
-                pathname: '/',
-                state: { ...navigationState, activeTab: 2 },
-              }}
+            <a
+              href=''
+              className={classNames('nav-link', { active: activeTabId === 2 })}
+              onClick={handleTabClick(2)}
             >
               #{tagName}
-            </Link>
+            </a>
           </li>
         ) : null}
       </ul>
