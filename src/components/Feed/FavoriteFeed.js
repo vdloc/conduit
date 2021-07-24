@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGetGlobalFeedQuery } from 'services/api';
-import ArticleList from 'components/ArticleList/ArticleList';
+import ArticleList from 'components/ArticleList';
 import Pagination from 'components/Pagination/Pagination';
 
 export default function FavoriteFeed({ username, offset, onPageClick }) {

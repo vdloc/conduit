@@ -7,6 +7,7 @@ import {
   setUserInfo,
 } from 'redux/slices/userSlice';
 import { useUpdateUserMutation } from 'services/api';
+import { clearToken } from 'utils/utils';
 
 export default function SettingForm() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ export default function SettingForm() {
   function handleSignOut() {
     dispatch(setUserInfo(null));
     history.push('/');
+    clearToken();
   }
 
   return (

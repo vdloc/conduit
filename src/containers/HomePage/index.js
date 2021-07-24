@@ -1,5 +1,5 @@
 import React from 'react';
-import Feed from 'components/Feed/Feed';
+import Feed from 'components/Feed';
 import TagsList from 'components/Tag/TagLinks';
 
 export default function Home() {

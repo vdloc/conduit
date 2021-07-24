@@ -7,7 +7,6 @@ import unfavoriteArticleMutation from './unfavoriteArticle';
 import updateArticleMutation from './updateArticle';
 
 import getArticleQuery from './getArticle';
-// import getArticleCommentsQuery from './getArticleComments';
 import getGlobalFeedQuery from './getGlobalFeed';
 import getSubscribedFeedQuery from './getSubscribeFeed';
 import getTagsQuery from './getTags';

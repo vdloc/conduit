@@ -6,7 +6,7 @@ const unfollowUserMutation = {
     method: 'DELETE',
     url: `${ENDPOINTS.PROFILES}/${username}/follow`,
   }),
-  invalidatesTags: [TAGS.PROFILE, TAGS.SUBSCRIBE_FEED],
+  invalidatesTags: [TAGS.PROFILE],
 };
 
 export default unfollowUserMutation;

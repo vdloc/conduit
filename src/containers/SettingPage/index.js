@@ -1,4 +1,4 @@
-import SettingForm from 'components/forms/SettingForm/SettingForm';
+import SettingForm from 'components/Form/Setting';
 import React from 'react';
 
 export default function SettingPage() {

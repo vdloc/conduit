@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LoginForm from 'components/forms/LoginForm/LoginForm';
+import LoginForm from 'components/Form/Login';
 
 export default function LoginPage() {
   return (

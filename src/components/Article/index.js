@@ -1,6 +1,7 @@
 import React from 'react';
+
 import { useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { selectCurrentUser } from 'redux/slices/userSlice';
 import {
   useCommentArticleMutation,
@@ -16,9 +17,8 @@ import ArticleActions from './ArticleActions';
 import ArticleBody from './ArticleBody';
 import ArticleComments from './ArticleComments';
 
-export default function ArticlePage() {
+export default function Article({ slug }) {
   const currentUser = useSelector(selectCurrentUser);
-  const { slug } = useParams();
   const history = useHistory();
   const [deleteArticle] = useDeleteArticleMutation();
   const [createComment] = useCommentArticleMutation();
@@ -68,7 +68,7 @@ export default function ArticlePage() {
   }
 
   return (
-    <div className='article-page'>
+    <>
       <div className='banner'>
         <div className='container'>
           <h1>{title}</h1>
@@ -102,7 +102,6 @@ export default function ArticlePage() {
             isOwnedArticle={isOwnedArticle}
           />
         </div>
-
         <ArticleComments
           image={image}
           comments={comments}
@@ -111,6 +110,6 @@ export default function ArticlePage() {
           onDeleteComment={handleDeleteComment}
         />
       </div>
-    </div>
+    </>
   );
 }

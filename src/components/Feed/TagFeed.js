@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGetGlobalFeedQuery } from 'services/api';
-import ArticleList from '../ArticleList/ArticleList';
+import ArticleList from '../ArticleList';
 import Pagination from '../Pagination/Pagination';
 
 export default function TagFeed({ tag, offset, onPageClick }) {

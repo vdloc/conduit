@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGetSubscribedFeedQuery } from 'services/api';
-import ArticleList from '../ArticleList/ArticleList';
+import ArticleList from '../ArticleList';
 import Pagination from '../Pagination/Pagination';
 console.log('~ useGetSubscribedFeedQuery', useGetSubscribedFeedQuery);
 

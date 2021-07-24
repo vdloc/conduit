@@ -1,3 +1,4 @@
+import TagList from 'components/Tag/TagList';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -5,17 +6,7 @@ import {
   useUnfavoriteArticleMutation,
 } from 'services/api';
 
-function TagList({ tags }) {
-  return (
-    <ul className='tag-list'>
-      {tags.map((tag) => (
-        <li className='tag-default tag-pill tag-outline'>{tag}</li>
-      ))}
-    </ul>
-  );
-}
-
-export default function Article({ article }) {
+export default function ArticleListItem({ article }) {
   const {
     slug,
     title,

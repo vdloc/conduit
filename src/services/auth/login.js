@@ -1,7 +1,8 @@
+import { saveToken } from 'utils/utils';
 import ENDPOINTS from '../ENDPOINTS';
 
 const loginMutation = {
-  async queryFn(args, api, _, baseQuery) {
+  async queryFn(args, _api, _options, baseQuery) {
     const loginResult = await baseQuery({
       method: 'POST',
       url: ENDPOINTS.LOGIN,
@@ -9,9 +10,7 @@ const loginMutation = {
     });
     const token = loginResult?.data?.user?.token;
 
-    if (token) {
-      window.localStorage.setItem(process.env.REACT_APP_TOKEN_KEY, token);
-    }
+    saveToken(token);
 
     return loginResult;
   },
