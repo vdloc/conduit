@@ -8,9 +8,7 @@ const favoriteArticleMutation = {
   }),
   invalidatesTags: (result, error, arg) => {
     if (result) {
-      const tags = [{ id: arg, type: TAGS.POST }];
-      console.log('~ favoriteArticleMutation', tags);
-      return tags;
+      return [{ id: arg, type: TAGS.POST }];
     } else {
       return [error?.status === 401 ? TAGS.UNAUTHORIZED : TAGS.UNKNOWN_ERROR];
     }
