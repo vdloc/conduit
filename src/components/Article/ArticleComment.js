@@ -12,21 +12,21 @@ export default function ArticleComment({
 }) {
   const profileLink = `/@${username}`;
   return (
-    <div class='card'>
-      <div class='card-block'>
-        <p class='card-text'>{body}</p>
+    <div className='card'>
+      <div className='card-block'>
+        <p className='card-text'>{body}</p>
       </div>
-      <div class='card-footer'>
-        <Link class='comment-author' to={profileLink}>
-          <img class='comment-author-img' src={image} alt={username} />
+      <div className='card-footer'>
+        <Link className='comment-author' to={profileLink}>
+          <img className='comment-author-img' src={image} alt={username} />
         </Link>{' '}
-        <Link class='comment-author' to={profileLink}>
+        <Link className='comment-author' to={profileLink}>
           {username}
         </Link>{' '}
-        <span class='date-posted'>{createdAt}</span>
+        <span className='date-posted'>{createdAt}</span>
         {isOwnedComment && (
-          <span class='mod-options' onClick={() => onDeleteComment(id)}>
-            <i class='ion-trash-a'></i>
+          <span className='mod-options' onClick={() => onDeleteComment(id)}>
+            <i className='ion-trash-a'></i>
           </span>
         )}
       </div>

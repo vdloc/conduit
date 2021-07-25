@@ -9,6 +9,7 @@ import {
   useDeleteCommentMutation,
   useFavoriteArticleMutation,
   useFollowUserMutation,
+  useGetArticleCommentsQuery,
   useGetArticleQuery,
   useUnfavoriteArticleMutation,
   useUnfollowUserMutation,
@@ -27,8 +28,8 @@ export default function Article({ slug }) {
   const [favoriteArticle] = useFavoriteArticleMutation();
   const [unfavoriteArticle] = useUnfavoriteArticleMutation();
   const [deleteComment] = useDeleteCommentMutation();
-  const { data: { article = {}, comments = [] } = {} } =
-    useGetArticleQuery(slug);
+  const { data: { article } = {} } = useGetArticleQuery(slug);
+  const { data: { comments } = {} } = useGetArticleCommentsQuery(slug);
   const {
     title,
     description,

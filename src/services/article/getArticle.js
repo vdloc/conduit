@@ -2,24 +2,9 @@ import TAGS from 'services/TAGS';
 import ENDPOINTS from '../ENDPOINTS';
 
 const getArticleQuery = {
-  async queryFn(arg, _api, _options, baseQuery) {
-    const articleResult = await baseQuery(`${ENDPOINTS.ARTICLES}/${arg}`);
-
-    if (articleResult.error) throw articleResult.error;
-
-    const commentResult = await baseQuery(
-      `${ENDPOINTS.ARTICLES}/${arg}/comments`
-    );
-
-    return commentResult.data
-      ? {
-          data: {
-            article: articleResult.data.article,
-            comments: commentResult.data.comments,
-          },
-        }
-      : { error: commentResult.error };
-  },
+  query: (slug) => ({
+    url: `${ENDPOINTS.ARTICLES}/${slug}`,
+  }),
   providesTags: (result) => {
     if (result) {
       const { article } = result;

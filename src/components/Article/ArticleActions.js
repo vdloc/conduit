@@ -4,11 +4,14 @@ import { Link } from 'react-router-dom';
 function OwnerButtons({ slug, onDeleteArticle }) {
   return (
     <span>
-      <Link class='btn btn-outline-secondary btn-sm' to={`/editor/${slug}`}>
-        <i class='ion-edit'></i> Edit Article
+      <Link className='btn btn-outline-secondary btn-sm' to={`/editor/${slug}`}>
+        <i className='ion-edit'></i> Edit Article
       </Link>{' '}
-      <button class='btn btn-outline-danger btn-sm' onClick={onDeleteArticle}>
-        <i class='ion-trash-a'></i> Delete Article
+      <button
+        className='btn btn-outline-danger btn-sm'
+        onClick={onDeleteArticle}
+      >
+        <i className='ion-trash-a'></i> Delete Article
       </button>
     </span>
   );

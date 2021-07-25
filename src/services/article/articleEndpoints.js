@@ -10,6 +10,7 @@ import getArticleQuery from './getArticle';
 import getGlobalFeedQuery from './getGlobalFeed';
 import getSubscribedFeedQuery from './getSubscribeFeed';
 import getTagsQuery from './getTags';
+import getArticleCommentsQuery from './getArticleComments';
 
 const articleEndpoints = {
   endpoints: (builder) => ({
@@ -21,7 +22,7 @@ const articleEndpoints = {
     favoriteArticle: builder.mutation(favoriteArticleMutation),
     unfavoriteArticle: builder.mutation(unfavoriteArticleMutation),
     getArticle: builder.query(getArticleQuery),
-    // getArticleComments: builder.query(getArticleCommentsQuery),
+    getArticleComments: builder.query(getArticleCommentsQuery),
     getGlobalFeed: builder.query(getGlobalFeedQuery),
     getSubscribedFeed: builder.query(getSubscribedFeedQuery),
     getTags: builder.query(getTagsQuery),

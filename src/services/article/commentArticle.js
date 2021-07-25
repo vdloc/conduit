@@ -15,7 +15,7 @@ const commentArticleMutation = {
     const { slug } = args;
 
     if (result) {
-      return [{ id: slug, type: TAGS.POST }];
+      return [{ id: slug, type: TAGS.COMMENTS }];
     } else {
       return [error?.status === 401 ? TAGS.UNAUTHORIZED : TAGS.UNKNOWN_ERROR];
     }

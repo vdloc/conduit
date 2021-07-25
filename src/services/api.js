@@ -40,6 +40,7 @@ export const {
   useFavoriteArticleMutation,
   useUnfavoriteArticleMutation,
   useGetArticleQuery,
+  useGetArticleCommentsQuery,
   useGetGlobalFeedQuery,
   useGetSubscribedFeedQuery,
   useGetTagsQuery,

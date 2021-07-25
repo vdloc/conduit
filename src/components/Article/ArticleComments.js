@@ -9,20 +9,24 @@ export default function ArticleComments({
   onDeleteComment,
 }) {
   return (
-    <div class='row'>
-      <div class='col-xs-12 col-md-8 offset-md-2'>
-        <form class='card comment-form' onSubmit={onSubmitComment}>
-          <div class='card-block'>
+    <div className='row'>
+      <div className='col-xs-12 col-md-8 offset-md-2'>
+        <form className='card comment-form' onSubmit={onSubmitComment}>
+          <div className='card-block'>
             <textarea
-              class='form-control'
+              className='form-control'
               rows='3'
               placeholder='Write a comment...'
               name='comment'
             ></textarea>
           </div>
-          <div class='card-footer'>
-            <img class='comment-author-img' src={image} alt={currentUsername} />
-            <button class='btn btn-sm btn-primary' type='submit'>
+          <div className='card-footer'>
+            <img
+              className='comment-author-img'
+              src={image}
+              alt={currentUsername}
+            />
+            <button className='btn btn-sm btn-primary' type='submit'>
               Post Comment
             </button>
           </div>
