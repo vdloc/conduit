@@ -1,6 +1,6 @@
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import LoginPage from 'containers/LoginPage';
 import RegisterPage from 'containers/RegisterPage';
 import HomePage from 'containers/HomePage';
@@ -32,6 +32,9 @@ function App() {
     <div className='App'>
       <Header />
       <Switch>
+        <Route exact path='/'>
+          <HomePage />
+        </Route>
         <Route path='/login'>
           <LoginPage />
         </Route>
@@ -53,9 +56,7 @@ function App() {
         <Route path='/@:username'>
           <ProfilePage />
         </Route>
-        <Route path='/'>
-          <HomePage />
-        </Route>
+        <Redirect to='/' />
       </Switch>
       <Footer />
     </div>
