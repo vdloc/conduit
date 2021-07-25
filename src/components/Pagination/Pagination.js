@@ -21,6 +21,7 @@ export default function Pagination({
       {pageList.map((pageId) => (
         <li
           className={classNames('page-item', { active: pageId === offset + 1 })}
+          key={pageId}
         >
           <a
             className='page-link'

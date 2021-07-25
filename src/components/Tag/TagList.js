@@ -5,8 +5,10 @@ export default function TagList({ tags }) {
 
   return (
     <ul className='tag-list'>
-      {tags.map((tag) => (
-        <li className='tag-default tag-pill tag-outline'>{tag}</li>
+      {tags.map((tag, id) => (
+        <li key={id} className='tag-default tag-pill tag-outline'>
+          {tag}
+        </li>
       ))}
     </ul>
   );
