@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink, useParams } from 'react-router-dom';
 import { selectCurrentUser } from 'redux/slices/userSlice';
 
 function PublicLinks() {
@@ -21,12 +21,14 @@ function PublicLinks() {
 }
 
 function PrivateLinks({ username }) {
+  const { slug } = useParams();
+
   return (
     <>
       <li className='nav-item'>
-        <NavLink className='nav-link' to='/editor'>
+        <NavLink className='nav-link' to='/editor' isActive={() => slug}>
           <i className='ion-compose'></i>
-          &nbsp;New Post
+          &nbsp; New Post
         </NavLink>
       </li>
       <li className='nav-item'>
@@ -50,9 +52,9 @@ export default function Header() {
   return (
     <nav className='navbar navbar-light'>
       <div className='container'>
-        <a className='navbar-brand' href='/'>
+        <Link className='navbar-brand' to='/'>
           conduit
-        </a>
+        </Link>
         <ul className='nav navbar-nav pull-xs-right'>
           <li className='nav-item'>
             <NavLink className='nav-link' to='/' exact>

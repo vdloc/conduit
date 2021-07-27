@@ -1,3 +1,4 @@
+import Avatar from 'components/Avatar';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -18,7 +19,7 @@ export default function ArticleComment({
       </div>
       <div className='card-footer'>
         <Link className='comment-author' to={profileLink}>
-          <img className='comment-author-img' src={image} alt={username} />
+          <Avatar className='comment-author-img' src={image} alt={username} />
         </Link>{' '}
         <Link className='comment-author' to={profileLink}>
           {username}

@@ -1,3 +1,6 @@
+import ErrorPlaceholder from 'components/ErrorPlaceholder';
+import useDisplayLoaderWhileFetch from 'hooks/useDisplayLoaderWhileFetch';
+import useErrorNotification from 'hooks/useErrorNotification';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -13,16 +16,24 @@ export default function TagFeed() {
   const dispatch = useDispatch();
   const tagName = useSelector(selectTagName);
   const tagFeedOffset = useSelector(selectTagFeedOffset);
-  const { data } = useGetGlobalFeedQuery({
-    tag: tagName,
-    offset: tagFeedOffset,
-  });
+  const { data, isSuccess, isFetching, isLoading, isError } =
+    useGetGlobalFeedQuery({
+      tag: tagName,
+      offset: tagFeedOffset,
+    });
 
   function handlePageItemClick(pageId) {
     dispatch(setTagFeedOffset(pageId - 1));
   }
 
-  return data ? (
+  useErrorNotification({
+    message: `Can't get the feed for #${tagName} tag !`,
+    toastId: `${tagName}_TagFeed`,
+    isError,
+  });
+  useDisplayLoaderWhileFetch(isFetching, isLoading);
+
+  return isSuccess && data ? (
     <>
       <ArticleList articles={data.articles} />
       <Pagination
@@ -31,5 +42,9 @@ export default function TagFeed() {
         onPageClick={handlePageItemClick}
       />
     </>
-  ) : null;
+  ) : isError ? (
+    <ErrorPlaceholder />
+  ) : (
+    'is loading...'
+  );
 }

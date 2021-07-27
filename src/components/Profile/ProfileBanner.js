@@ -1,5 +1,6 @@
+import Avatar from 'components/Avatar';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectCurrentUser } from 'redux/slices/userSlice';
 import {
@@ -10,7 +11,7 @@ import {
 
 export default function ProfileBanner({ username }) {
   const currentUser = useSelector(selectCurrentUser);
-  const { data: { profile } = {} } = useGetUserProfileQuery(username);
+  const { data: profile } = useGetUserProfileQuery(username);
   const [followUser] = useFollowUserMutation();
   const [unfollowUser] = useUnfollowUserMutation();
 
@@ -27,7 +28,7 @@ export default function ProfileBanner({ username }) {
       <div className='container'>
         <div className='row'>
           <div className='col-xs-12 col-md-10 offset-md-1'>
-            <img
+            <Avatar
               src={profile.image}
               className='user-img'
               alt={profile.username}

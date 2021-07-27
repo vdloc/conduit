@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import ErrorPlaceholder from 'components/ErrorPlaceholder';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -11,7 +12,7 @@ import { useGetTagsQuery } from 'services/api';
 export default function TagLinks() {
   const dispatch = useDispatch();
   const activeTabId = useSelector(selectHomePageActiveTabId);
-  const { data: { tags } = {} } = useGetTagsQuery();
+  const { data: tags, isSuccess, isError } = useGetTagsQuery();
 
   function handleTabClick(tag) {
     return function (e) {
@@ -24,7 +25,7 @@ export default function TagLinks() {
     };
   }
 
-  return (
+  return isSuccess ? (
     <div className='tag-list'>
       {tags && tags.length
         ? tags.map((tag, id) => (
@@ -39,5 +40,9 @@ export default function TagLinks() {
           ))
         : ''}
     </div>
+  ) : isError ? (
+    <ErrorPlaceholder />
+  ) : (
+    'isLoading...'
   );
 }

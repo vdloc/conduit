@@ -1,3 +1,4 @@
+import Avatar from 'components/Avatar';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -63,7 +64,7 @@ export default function ArticleActions({
   return (
     <div className='article-meta'>
       <Link to={`/@${username}`}>
-        <img src={image} alt={username} />
+        <Avatar src={image} alt={username} />
       </Link>
       <div className='info'>
         <Link to={`/@${username}`} className='author'>

@@ -2,7 +2,7 @@
 import classNames from 'classnames';
 import FavoriteFeed from 'components/Feed/FavoriteFeed';
 import UserOwnedFeed from 'components/Feed/UserOwnedFeed';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectProfilePageActiveTabId,
@@ -20,6 +20,11 @@ export default function Profile({ username }) {
       dispatch(setProfilePageActiveTabId(tabId));
     };
   }
+
+  useEffect(() => {
+    dispatch(setProfilePageActiveTabId(0));
+  }, []);
+
   return (
     <>
       <ProfileBanner username={username} />

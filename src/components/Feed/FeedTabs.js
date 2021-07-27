@@ -22,11 +22,6 @@ export default function FeedTabs() {
     };
   }
 
-  useEffect(() => {
-    dispatch(setHomePageActiveTabId(currentUser ? 0 : 1));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <div className='feed-toggle'>
       <ul className='nav nav-pills outline-active'>

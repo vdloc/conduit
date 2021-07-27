@@ -1,17 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { getToken } from 'utils/utils';
 import articleEndpoints from './article/articleEndpoints';
 import authEndpoints from './auth/authEndpoints';
-import TAGS from './TAGS';
+import { TAG_TYPES } from './constants';
 import userEndpoints from './user/userEndpoints';
 
 const rootApi = createApi({
-  reducerPath: 'rootApi',
+  reducerPath: 'conduitApi',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API,
     prepareHeaders: (headers, { getState }) => {
-      const token =
-        getState()?.user?.token ||
-        window.localStorage.getItem(process.env.REACT_APP_TOKEN_KEY);
+      const token = getState()?.user?.token || getToken();
 
       if (token) {
         headers.set('Authorization', `Token ${token}`);
@@ -21,7 +20,7 @@ const rootApi = createApi({
       return headers;
     },
   }),
-  tagTypes: Object.values(TAGS),
+  tagTypes: Object.values(TAG_TYPES),
   endpoints: () => ({}),
 });
 

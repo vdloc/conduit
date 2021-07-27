@@ -1,106 +1,149 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import {
-  selectCurrentUser,
-  updateUserInfo,
-  setUserInfo,
-} from 'redux/slices/userSlice';
+import classNames from 'classnames';
+import { Field, Form, Formik } from 'formik';
+
+import { selectCurrentUser, signOut } from 'redux/slices/userSlice';
 import { useUpdateUserMutation } from 'services/api';
-import { clearToken } from 'utils/utils';
+import { errorToast } from 'utils/toast';
+import { clearToken, createSerializedErrorMessages } from 'utils/utils';
+import SettingSchema from './SettingSchema';
+import ErrorMessages from '../ErrorMessages';
+
+const initialValues = {
+  email: '',
+  password: '',
+  username: '',
+  image: '',
+  bio: '',
+};
 
 export default function SettingForm() {
   const dispatch = useDispatch();
+  const [asyncMessages, setAsyncMessages] = useState([]);
   const history = useHistory();
-  const currentUser = useSelector(selectCurrentUser);
-  const [formState, setFormState] = useState({ password: '', ...currentUser });
-  const [updateUser, { isLoading }] = useUpdateUserMutation();
+  const currentUser = useSelector(selectCurrentUser) || {};
+  const [updateUser, { isError, error }] = useUpdateUserMutation();
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-
-    setFormState({ ...formState, [name]: value });
+  async function handleSubmit(values) {
+    updateUser(values);
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  function createCustomChangeHandler(handleChange) {
+    return function (e) {
+      handleChange(e);
 
-    try {
-      const { user } = await updateUser(formState).unwrap();
-
-      dispatch(updateUserInfo(user));
-    } catch (e) {}
+      // Clean the async error messages when user is updating the form again.
+      if (asyncMessages.length) {
+        setAsyncMessages([]);
+      }
+    };
   }
 
   function handleSignOut() {
-    dispatch(setUserInfo(null));
+    dispatch(signOut());
     history.push('/');
     clearToken();
   }
 
+  useEffect(() => {
+    if (isError && error) {
+      const { status, data } = error || {};
+      if (status === 422) {
+        const serializedErrorMessages = createSerializedErrorMessages(
+          data.errors
+        );
+        setAsyncMessages(serializedErrorMessages);
+      } else {
+        errorToast(`Cant' update user setting!`, { toastId: 'Setting' });
+      }
+    }
+  }, [isError, error]);
+
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <fieldset>
-          <fieldset className='form-group'>
-            <input
-              className='form-control'
-              type='text'
-              placeholder='URL of profile picture'
-              name='image'
-              value={formState.image}
-              onChange={handleChange}
+    <Formik
+      initialValues={{ ...initialValues, ...currentUser }}
+      validationSchema={SettingSchema}
+      onSubmit={handleSubmit}
+    >
+      {({ isSubmitting, dirty, isValid, handleChange }) => {
+        const isSubmitDisabled = isSubmitting || !dirty || !isValid;
+        const customChangeHandler = createCustomChangeHandler(handleChange);
+
+        return (
+          <>
+            <ErrorMessages
+              order={['image', 'username', 'bio', 'email', 'password']}
+              extraMessages={asyncMessages}
             />
-          </fieldset>
-          <fieldset className='form-group'>
-            <input
-              className='form-control form-control-lg'
-              type='text'
-              placeholder='Your Name'
-              name='username'
-              value={formState.username}
-              onChange={handleChange}
-            />
-          </fieldset>
-          <fieldset className='form-group'>
-            <textarea
-              className='form-control form-control-lg'
-              rows='8'
-              placeholder='Short bio about you'
-              name='bio'
-              value={formState.bio}
-              onChange={handleChange}
-            ></textarea>
-          </fieldset>
-          <fieldset className='form-group'>
-            <input
-              className='form-control form-control-lg'
-              type='text'
-              placeholder='Email'
-              name='email'
-              value={formState.email}
-              onChange={handleChange}
-            />
-          </fieldset>
-          <fieldset className='form-group'>
-            <input
-              className='form-control form-control-lg'
-              type='password'
-              placeholder='Password'
-              name='password'
-              value={formState.password}
-              onChange={handleChange}
-            />
-          </fieldset>
-          <button className='btn btn-lg btn-primary pull-xs-right'>
-            Update Settings
-          </button>
-        </fieldset>
-      </form>
-      <hr />
-      <button class='btn btn-outline-danger' onClick={handleSignOut}>
-        Or click here to logout.
-      </button>
-    </>
+            <Form>
+              <fieldset>
+                <fieldset className='form-group'>
+                  <Field
+                    className='form-control'
+                    type='text'
+                    placeholder='URL of profile picture'
+                    name='image'
+                    onChange={customChangeHandler}
+                  />
+                </fieldset>
+                <fieldset className='form-group'>
+                  <Field
+                    className='form-control form-control-lg'
+                    type='text'
+                    placeholder='Your Name'
+                    name='username'
+                    onChange={customChangeHandler}
+                  />
+                </fieldset>
+                <fieldset className='form-group'>
+                  <Field
+                    as='textarea'
+                    className='form-control form-control-lg'
+                    rows='8'
+                    placeholder='Short bio about you'
+                    name='bio'
+                    onChange={customChangeHandler}
+                  ></Field>
+                </fieldset>
+                <fieldset className='form-group'>
+                  <Field
+                    className='form-control form-control-lg'
+                    type='text'
+                    placeholder='Email'
+                    name='email'
+                    onChange={customChangeHandler}
+                  />
+                </fieldset>
+                <fieldset className='form-group'>
+                  <Field
+                    className='form-control form-control-lg'
+                    type='password'
+                    placeholder='Password'
+                    name='password'
+                    onChange={customChangeHandler}
+                  />
+                </fieldset>
+                <button
+                  className={classNames(
+                    'btn btn-lg btn-primary pull-xs-right',
+                    {
+                      disabled: isSubmitDisabled,
+                    }
+                  )}
+                >
+                  Update Settings
+                </button>
+              </fieldset>
+            </Form>
+            <hr />
+            <button className='btn btn-outline-danger' onClick={handleSignOut}>
+              Or click here to logout.
+            </button>
+          </>
+        );
+      }}
+    </Formik>
   );
 }

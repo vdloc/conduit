@@ -1,80 +1,109 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { setUserInfo } from 'redux/slices/userSlice';
+import { useEffect } from 'react';
+import { Formik, Form, Field } from 'formik';
+
 import { useRegisterMutation } from 'services/api';
-import { getSerializedErrorMessages } from 'utils/utils';
+import { errorToast } from 'utils/toast';
+import { createSerializedErrorMessages } from 'utils/utils';
 import ErrorMessages from '../ErrorMessages';
+import RegisterSchema from './RegisterSchema';
+import classNames from 'classnames';
+
+const initialValues = {
+  username: '',
+  email: '',
+  password: '',
+};
 
 export default function RegisterForm() {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const [formState, setFormState] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
-  const [errorMessages, setErrorMessages] = useState([]);
-  const [register, { isLoading }] = useRegisterMutation();
+  const [register, { isError, error }] = useRegisterMutation();
+  const [asyncMessages, setAsyncMessages] = useState([]);
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-
-    setFormState({ ...formState, [name]: value });
+  async function handleSubmit(values) {
+    await register(values);
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  function createCustomChangeHandler(handleChange) {
+    return function (e) {
+      handleChange(e);
 
-    try {
-      const { user } = await register(formState).unwrap();
-      dispatch(setUserInfo(user));
-      history.push({ pathname: '/', state: { activeTab: 0 } });
-    } catch (err) {
-      const { status, data } = err;
+      // Clean the async error messages when user is updating the form again.
+      if (asyncMessages.length) {
+        setAsyncMessages([]);
+      }
+    };
+  }
+
+  useEffect(() => {
+    if (isError && error) {
+      const { status, data } = error || {};
       if (status === 422) {
-        const serializedErrorMessages = getSerializedErrorMessages(data.errors);
-
-        setErrorMessages(serializedErrorMessages);
+        const serializedErrorMessages = createSerializedErrorMessages(
+          data.errors
+        );
+        setAsyncMessages(serializedErrorMessages);
+      } else {
+        errorToast(`Cant' perform register action!`, { toastId: 'Register' });
       }
     }
-  }
+  }, [isError, error]);
 
   return (
-    <>
-      <ErrorMessages messages={errorMessages} />
-      <form onSubmit={handleSubmit}>
-        <fieldset className='form-group'>
-          <input
-            className='form-control form-control-lg'
-            type='text'
-            placeholder='Username'
-            name='username'
-            onChange={handleChange}
-          />
-        </fieldset>
-        <fieldset className='form-group'>
-          <input
-            className='form-control form-control-lg'
-            type='text'
-            placeholder='Email'
-            name='email'
-            onChange={handleChange}
-          />
-        </fieldset>
-        <fieldset className='form-group'>
-          <input
-            className='form-control form-control-lg'
-            type='password'
-            placeholder='Password'
-            name='password'
-            onChange={handleChange}
-          />
-        </fieldset>
-        <button className='btn btn-lg btn-primary pull-xs-right' type='submit'>
-          Sign up
-        </button>
-      </form>
-    </>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={RegisterSchema}
+      onSubmit={handleSubmit}
+    >
+      {({ isSubmitting, dirty, isValid, handleChange }) => {
+        const isSubmitDisabled = isSubmitting || !dirty || !isValid;
+        const customChangeHandler = createCustomChangeHandler(handleChange);
+
+        return (
+          <>
+            <ErrorMessages
+              order={['username', 'email', 'password']}
+              extraMessages={asyncMessages}
+            />
+            <Form>
+              <fieldset className='form-group'>
+                <Field
+                  className='form-control form-control-lg'
+                  type='text'
+                  placeholder='Username'
+                  name='username'
+                  onChange={customChangeHandler}
+                />
+              </fieldset>
+              <fieldset className='form-group'>
+                <Field
+                  className='form-control form-control-lg'
+                  type='text'
+                  placeholder='Email'
+                  name='email'
+                  onChange={customChangeHandler}
+                />
+              </fieldset>
+              <fieldset className='form-group'>
+                <Field
+                  className='form-control form-control-lg'
+                  type='password'
+                  placeholder='Password'
+                  name='password'
+                  onChange={customChangeHandler}
+                />
+              </fieldset>
+              <button
+                className={classNames('btn btn-lg btn-primary pull-xs-right', {
+                  disabled: isSubmitDisabled,
+                })}
+                type='submit'
+              >
+                Sign up
+              </button>
+            </Form>
+          </>
+        );
+      }}
+    </Formik>
   );
 }

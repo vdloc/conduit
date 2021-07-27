@@ -1,23 +1,34 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
+import { persistStore } from 'redux-persist';
 import logger from 'redux-logger';
 import rootApi from 'services/api';
-import createRootReducer from './rootReducer';
+import rootReducer from './rootReducer';
+import history from './history';
 
-export const history = createBrowserHistory();
-const rootReducer = createRootReducer(history);
-const middlewares = [rootApi.middleware, logger, routerMiddleware(history)];
+const isNonProductionMode = process.env.NODE_ENV !== 'production';
+const middlewares = [rootApi.middleware, routerMiddleware(history)];
+
+if (isNonProductionMode) {
+  middlewares.push(logger);
+}
 
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(middlewares),
-  devTools: true,
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(middlewares),
+  devTools: isNonProductionMode,
 });
 
-if (process.env.NODE_ENV !== 'production' && module.hot) {
-  module.hot.accept('./rootReducer', () => store.replaceReducer(rootReducer));
+if (isNonProductionMode && module.hot) {
+  module.hot.accept(['./rootReducer', 'services/api'], () => {
+    const rootReducer = require('./rootReducer').default;
+
+    store.replaceReducer(rootReducer);
+  });
 }
 
+export const persistor = persistStore(store);
 export default store;

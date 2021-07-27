@@ -20,16 +20,15 @@ import ArticleComments from './ArticleComments';
 
 export default function Article({ slug }) {
   const currentUser = useSelector(selectCurrentUser);
-  const history = useHistory();
-  const [deleteArticle] = useDeleteArticleMutation();
+  const [deleteArticle, { isError, error }] = useDeleteArticleMutation();
   const [createComment] = useCommentArticleMutation();
   const [followUser] = useFollowUserMutation();
   const [unfollowUser] = useUnfollowUserMutation();
   const [favoriteArticle] = useFavoriteArticleMutation();
   const [unfavoriteArticle] = useUnfavoriteArticleMutation();
   const [deleteComment] = useDeleteCommentMutation();
-  const { data: { article } = {} } = useGetArticleQuery(slug);
-  const { data: { comments } = {} } = useGetArticleCommentsQuery(slug);
+  const { data: article } = useGetArticleQuery(slug);
+  const { data: comments } = useGetArticleCommentsQuery(slug);
   const {
     title,
     description,
@@ -44,7 +43,6 @@ export default function Article({ slug }) {
 
   async function handleDeleteArticle() {
     await deleteArticle(slug);
-    history.push('/');
   }
 
   async function handleFollowAuthor() {

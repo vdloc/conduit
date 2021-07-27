@@ -1,8 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import rootApi from 'services/api';
 
+const { endpoints } = rootApi;
+const mutateHomeSettingEndpointsNames = ['login', 'register', 'deleteArticle'];
+const mutateHomeSettingStateEndpoints = Object.entries(endpoints)
+  .filter(([name]) => mutateHomeSettingEndpointsNames.includes(name))
+  .flatMap(([_name, endpoint]) => [
+    endpoint.matchFulfilled,
+    endpoint.matchRejected,
+  ]);
 const initialState = {
   home: {
-    activeTabId: 0,
+    activeTabId: 1,
     subscribedFeedOffset: 0,
     globalFeedOffset: 0,
     tagFeedOffset: 0,
@@ -14,7 +23,6 @@ const initialState = {
     favoriteFeedOffset: 0,
   },
 };
-
 const settingSlice = createSlice({
   name: 'setting',
   initialState,
@@ -44,7 +52,20 @@ const settingSlice = createSlice({
       state.profile.favoriteFeedOffset = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addMatcher(isAnyOf(...mutateHomeSettingStateEndpoints), (state) => {
+      state.home.activeTabId = 0;
+    });
+
+    builder.addMatcher(isSignOutAction, (state) => {
+      Object.assign(state, initialState);
+    });
+  },
 });
+
+function isSignOutAction(action) {
+  return action.type.endsWith('signOut');
+}
 
 export const {
   setHomePageActiveTabId,
@@ -55,6 +76,7 @@ export const {
   setProfilePageActiveTabId,
   setOwnFeedOffset,
   setFavoriteFeedOffset,
+  resetSettings,
 } = settingSlice.actions;
 
 export const selectHomePageActiveTabId = (state) =>

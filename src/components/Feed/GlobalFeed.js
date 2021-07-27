@@ -1,3 +1,6 @@
+import ErrorPlaceholder from 'components/ErrorPlaceholder';
+import useDisplayLoaderWhileFetch from 'hooks/useDisplayLoaderWhileFetch';
+import useErrorNotification from 'hooks/useErrorNotification';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -11,13 +14,23 @@ import Pagination from '../Pagination/Pagination';
 export default function GlobalFeed() {
   const dispatch = useDispatch();
   const globalFeedOffset = useSelector(selectGlobalFeedOffset);
-  const { data } = useGetGlobalFeedQuery({ offset: globalFeedOffset });
+  const { data, isError, isSuccess, isFetching, isLoading } =
+    useGetGlobalFeedQuery({
+      offset: globalFeedOffset,
+    });
 
   function handlePageItemClick(pageId) {
     dispatch(setGlobalFeedOffset(pageId - 1));
   }
 
-  return data ? (
+  useErrorNotification({
+    message: `Can't get the global feed !`,
+    toastId: 'GlobalFeed',
+    isError,
+  });
+  useDisplayLoaderWhileFetch(isFetching, isLoading);
+
+  return isSuccess && data ? (
     <>
       <ArticleList articles={data.articles} />
       <Pagination
@@ -26,5 +39,9 @@ export default function GlobalFeed() {
         onPageClick={handlePageItemClick}
       />
     </>
-  ) : null;
+  ) : isError ? (
+    <ErrorPlaceholder />
+  ) : (
+    'is Loading...'
+  );
 }

@@ -1,5 +1,5 @@
 import loginMutation from './login';
-import registerMutation from './registration';
+import registerMutation from './register';
 
 const authEndpoints = {
   endpoints: (builder) => ({

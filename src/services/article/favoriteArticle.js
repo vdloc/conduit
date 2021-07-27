@@ -1,18 +1,19 @@
-import TAGS from 'services/TAGS';
-import ENDPOINTS from '../ENDPOINTS';
+import { createQueryTags } from 'services/apiUtils';
+import { ENDPOINTS, generalFeedTags, TAG_TYPES } from 'services/constants';
+
+function resultTagsReducer(_result, slug) {
+  return [{ id: slug, type: TAG_TYPES.POST }];
+}
 
 const favoriteArticleMutation = {
   query: (slug) => ({
     method: 'POST',
     url: `${ENDPOINTS.ARTICLES}/${slug}/favorite`,
   }),
-  invalidatesTags: (result, error, arg) => {
-    if (result) {
-      return [{ id: arg, type: TAGS.POST }];
-    } else {
-      return [error?.status === 401 ? TAGS.UNAUTHORIZED : TAGS.UNKNOWN_ERROR];
-    }
-  },
+  invalidatesTags: createQueryTags({
+    resultTagsReducer,
+    defaultTags: generalFeedTags,
+  }),
 };
 
 export default favoriteArticleMutation;

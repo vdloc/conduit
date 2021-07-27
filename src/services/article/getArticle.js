@@ -1,22 +1,22 @@
-import TAGS from 'services/TAGS';
-import ENDPOINTS from '../ENDPOINTS';
+import { createQueryTags } from 'services/apiUtils';
+import { ENDPOINTS, TAG_TYPES } from 'services/constants';
+
+function resultTagsReducer(article, _slug) {
+  return [
+    { id: article.slug, type: TAG_TYPES.POST },
+    { id: article.author.username, type: TAG_TYPES.PROFILE },
+  ];
+}
 
 const getArticleQuery = {
   query: (slug) => ({
     url: `${ENDPOINTS.ARTICLES}/${slug}`,
   }),
-  providesTags: (result) => {
-    if (result) {
-      const { article } = result;
-
-      return [
-        { id: article.slug, type: TAGS.POST },
-        { id: article.author.username, type: TAGS.PROFILE },
-      ];
-    } else {
-      return [TAGS.PROFILE];
-    }
-  },
+  transformResponse: (response) => response.article,
+  providesTags: createQueryTags({
+    resultTagsReducer,
+    defaultTags: [TAG_TYPES.PROFILE],
+  }),
 };
 
 export default getArticleQuery;

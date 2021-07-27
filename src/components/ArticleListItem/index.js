@@ -1,10 +1,11 @@
-import TagList from 'components/Tag/TagList';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   useFavoriteArticleMutation,
   useUnfavoriteArticleMutation,
 } from 'services/api';
+import Avatar from 'components/Avatar';
+import TagList from 'components/Tag/TagList';
 
 export default function ArticleListItem({ article }) {
   const {
@@ -28,7 +29,7 @@ export default function ArticleListItem({ article }) {
     <div className='article-preview'>
       <div className='article-meta'>
         <Link to={`/@${username}`}>
-          <img src={image} alt={`${username} avatar`} />
+          <Avatar src={image} alt={`${username} avatar`} />
         </Link>
         <div className='info'>
           <Link className='author' to={`/@${username}`}>

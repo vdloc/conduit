@@ -7,20 +7,31 @@ import {
   selectFavoriteFeedOffset,
   setFavoriteFeedOffset,
 } from 'redux/slices/settingSlice';
+import useErrorNotification from 'hooks/useErrorNotification';
+import ErrorPlaceholder from 'components/ErrorPlaceholder';
+import useDisplayLoaderWhileFetch from 'hooks/useDisplayLoaderWhileFetch';
 
 export default function FavoriteFeed({ username }) {
   const dispatch = useDispatch();
   const favoriteFeedOffset = useSelector(selectFavoriteFeedOffset);
-  const { data } = useGetGlobalFeedQuery({
-    favorited: username,
-    offset: favoriteFeedOffset,
-  });
+  const { data, isSuccess, isFetching, isLoading, isError } =
+    useGetGlobalFeedQuery({
+      favorited: username,
+      offset: favoriteFeedOffset,
+    });
 
   function handlePageItemClick(pageId) {
     dispatch(setFavoriteFeedOffset(pageId - 1));
   }
 
-  return data ? (
+  useErrorNotification({
+    message: `Can't get the favorite feed!`,
+    toastId: 'FavoriteFeed',
+    isError,
+  });
+  useDisplayLoaderWhileFetch(isFetching, isLoading);
+
+  return isSuccess && data ? (
     <>
       <ArticleList articles={data.articles} />
       <Pagination
@@ -29,5 +40,9 @@ export default function FavoriteFeed({ username }) {
         onPageClick={handlePageItemClick}
       />
     </>
-  ) : null;
+  ) : isError ? (
+    <ErrorPlaceholder />
+  ) : (
+    'is loading...'
+  );
 }

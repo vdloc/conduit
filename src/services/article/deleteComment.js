@@ -1,21 +1,18 @@
-import TAGS from 'services/TAGS';
-import ENDPOINTS from '../ENDPOINTS';
+import { createQueryTags } from 'services/apiUtils';
+import { ENDPOINTS, TAG_TYPES } from 'services/constants';
+
+function resultTagsReducer(_result, args) {
+  const { slug } = args;
+
+  return [{ id: slug, type: TAG_TYPES.POST_COMMENTS }];
+}
 
 const deleteCommentMutation = {
   query: ({ slug, id }) => ({
     method: 'DELETE',
     url: `${ENDPOINTS.ARTICLES}/${slug}/comments/${id}`,
-    body: {},
   }),
-  invalidatesTags: (result, error, args) => {
-    const { slug } = args;
-
-    if (result) {
-      return [{ id: slug, type: TAGS.COMMENTS }];
-    } else {
-      return [error?.status === 401 ? TAGS.UNAUTHORIZED : TAGS.UNKNOWN_ERROR];
-    }
-  },
+  invalidatesTags: createQueryTags({ resultTagsReducer }),
 };
 
 export default deleteCommentMutation;

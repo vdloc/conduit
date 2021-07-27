@@ -1,3 +1,6 @@
+import ErrorPlaceholder from 'components/ErrorPlaceholder';
+import useDisplayLoaderWhileFetch from 'hooks/useDisplayLoaderWhileFetch';
+import useErrorNotification from 'hooks/useErrorNotification';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -11,16 +14,24 @@ import Pagination from '../Pagination/Pagination';
 export default function UserOwnedFeed({ username }) {
   const dispatch = useDispatch();
   const ownFeedOffset = useSelector(selectOwnFeedOffset);
-  const { data } = useGetGlobalFeedQuery({
-    offset: ownFeedOffset,
-    author: username,
-  });
+  const { data, isSuccess, isFetching, isLoading, isError } =
+    useGetGlobalFeedQuery({
+      offset: ownFeedOffset,
+      author: username,
+    });
 
   function handlePageItemClick(pageId) {
     dispatch(setOwnFeedOffset(pageId - 1));
   }
 
-  return data ? (
+  useErrorNotification({
+    message: `Can't get the user feed !`,
+    toastId: 'UserFeed',
+    isError,
+  });
+  useDisplayLoaderWhileFetch(isFetching, isLoading);
+
+  return isSuccess && data ? (
     <>
       <ArticleList articles={data.articles} />
       <Pagination
@@ -29,5 +40,9 @@ export default function UserOwnedFeed({ username }) {
         onPageClick={handlePageItemClick}
       />
     </>
-  ) : null;
+  ) : isError ? (
+    <ErrorPlaceholder />
+  ) : (
+    'is loading...'
+  );
 }

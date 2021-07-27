@@ -1,3 +1,4 @@
+import Avatar from 'components/Avatar';
 import React from 'react';
 import ArticleComment from './ArticleComment';
 
@@ -21,7 +22,7 @@ export default function ArticleComments({
             ></textarea>
           </div>
           <div className='card-footer'>
-            <img
+            <Avatar
               className='comment-author-img'
               src={image}
               alt={currentUsername}
