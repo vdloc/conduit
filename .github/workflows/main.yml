@@ -29,7 +29,7 @@ jobs:
       - name: Setting up environment
         run: yarn install
       - name: Build
-        run: yarn build
+        run: CI=false yarn build
       - name: Deploy to surge.sh
         run: |
           cd build
