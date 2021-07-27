@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getToken } from 'utils/utils';
-import articleEndpoints from './article/articleEndpoints';
-import authEndpoints from './auth/authEndpoints';
 import { TAG_TYPES } from './constants';
 import userEndpoints from './user/userEndpoints';
+import articleEndpoints from './article/articleEndpoints';
+import authEndpoints from './auth/authEndpoints';
 
 const rootApi = createApi({
   reducerPath: 'conduitApi',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link, NavLink, useParams } from 'react-router-dom';
-import { selectCurrentUser } from 'redux/slices/userSlice';
+import { selectCurrentUser } from 'store/slices/userSlice';
 
 function PublicLinks() {
   return (

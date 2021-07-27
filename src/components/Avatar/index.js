@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import style from './Avatar.module.scss';
+import style from './styles.module.scss';
 
 const PLACEHOLDER_IMAGE_SRC =
   'https://static.productionready.io/images/smiley-cyrus.jpg';

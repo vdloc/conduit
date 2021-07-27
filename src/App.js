@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { useGetCurrentUserQuery } from 'services/api';
 import { getToken } from 'utils/utils';
-import PagesRouting from 'containers/PagesRouting';
+import PagesRouting from 'pages/PagesRouting';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import ToastWrapper from 'containers/ToastWrapper';
+import ToastWrapper from 'components/ToastWrapper';
 import Loader from 'components/Loader';
 
 function App() {

@@ -5,7 +5,7 @@ import {
   useUnfavoriteArticleMutation,
 } from 'services/api';
 import Avatar from 'components/Avatar';
-import TagList from 'components/Tag/TagList';
+import TagList from 'components/TagList';
 
 export default function ArticleListItem({ article }) {
   const {

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { displayLoader } from 'redux/slices/loaderSlice';
+import { displayLoader } from 'store/slices/loaderSlice';
 
 export default function useDisplayLoaderWhileFetch(isFetching, isLoading) {
   const dispatch = useDispatch();
