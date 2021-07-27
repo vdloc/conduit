@@ -31,6 +31,9 @@ jobs:
       - name: Build
         run: CI=false yarn build
       - name: Deploy to surge.sh
-        run: |
-          cd build
-          surge --domain snobbish-joke.surge.sh
+        uses: dswistowski/surge-sh-action@v1.0.1
+        with:
+          domain: ${{ secrets.surge_domain }}
+          project: '.'
+          login: ${{ secrets.email }}
+          token: ${{ secrets.surge_token }}
