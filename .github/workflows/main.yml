@@ -34,6 +34,6 @@ jobs:
         uses: dswistowski/surge-sh-action@v1.0.1
         with:
           domain: ${{ secrets.surge_domain }}
-          project: '.'
+          project: './build'
           login: ${{ secrets.email }}
           token: ${{ secrets.surge_token }}
