@@ -15,6 +15,8 @@ import {
 import ArticleBody from './ArticleBody';
 import ArticleComments from './ArticleComments';
 import ArticleActions from './ArticleActions';
+import ArticleBannerPlaceholder from './ArticleBannerPlaceholder';
+import ArticleBodyPlaceholder from './ArticleBodyPlaceholder';
 
 export default function ArticleDetail({ slug }) {
   const currentUser = useSelector(selectCurrentUser);
@@ -25,7 +27,9 @@ export default function ArticleDetail({ slug }) {
   const [favoriteArticle] = useFavoriteArticleMutation();
   const [unfavoriteArticle] = useUnfavoriteArticleMutation();
   const [deleteComment] = useDeleteCommentMutation();
-  const { data: article } = useGetArticleQuery(slug);
+  const { data: article, isFetching: isArticleFetching } = useGetArticleQuery(
+    slug
+  );
   const { data: comments } = useGetArticleCommentsQuery(slug);
   const {
     title,
@@ -68,41 +72,52 @@ export default function ArticleDetail({ slug }) {
     <>
       <div className='banner'>
         <div className='container'>
-          <h1>{title}</h1>
-          <p>{description}</p>
-          <ArticleActions
-            slug={slug}
-            image={image}
-            updatedAt={updatedAt}
-            following={following}
-            username={username}
-            favoritesCount={favoritesCount}
-            onDeleteArticle={handleDeleteArticle}
-            onFollowAuthor={handleFollowAuthor}
-            onFavoriteArticle={handleFavoriteArticle}
-            isOwnedArticle={isOwnedArticle}
-          />
+          {isArticleFetching ? (
+            <ArticleBannerPlaceholder />
+          ) : (
+            <>
+              <h1>{title}</h1>
+              <p>{description}</p>
+              <ArticleActions
+                slug={slug}
+                image={image}
+                updatedAt={updatedAt}
+                following={following}
+                username={username}
+                favoritesCount={favoritesCount}
+                onDeleteArticle={handleDeleteArticle}
+                onFollowAuthor={handleFollowAuthor}
+                onFavoriteArticle={handleFavoriteArticle}
+                isOwnedArticle={isOwnedArticle}
+              />
+            </>
+          )}
         </div>
       </div>
       <div className='container page'>
-        <ArticleBody body={body} tags={tagList} />
-        <hr />
-        <div className='article-actions'>
-          <ArticleActions
-            slug={slug}
-            following={following}
-            username={username}
-            favoritesCount={favoritesCount}
-            onDeleteArticle={handleDeleteArticle}
-            onFollowAuthor={handleFollowAuthor}
-            onFavoriteArticle={handleFavoriteArticle}
-            isOwnedArticle={isOwnedArticle}
-          />
-        </div>
+        {isArticleFetching ? (
+          <ArticleBodyPlaceholder />
+        ) : (
+          <>
+            <ArticleBody body={body} tags={tagList} />
+            <hr />
+            <div className='article-actions'>
+              <ArticleActions
+                slug={slug}
+                following={following}
+                username={username}
+                favoritesCount={favoritesCount}
+                onDeleteArticle={handleDeleteArticle}
+                onFollowAuthor={handleFollowAuthor}
+                onFavoriteArticle={handleFavoriteArticle}
+                isOwnedArticle={isOwnedArticle}
+              />
+            </div>
+          </>
+        )}
         <ArticleComments
           image={image}
           comments={comments}
-          currentUsername={currentUser?.username}
           onSubmitComment={handleSubmitComment}
           onDeleteComment={handleDeleteComment}
         />

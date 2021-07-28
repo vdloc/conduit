@@ -11,16 +11,22 @@ import {
 import { useGetGlobalFeedQuery } from 'services/api';
 import ArticleList from 'components/ArticleList';
 import Pagination from 'components/Pagination';
+import ArticleListPlaceholder from 'components/ArticleListPlaceholder';
 
 export default function TagFeed() {
   const dispatch = useDispatch();
   const tagName = useSelector(selectTagName);
   const tagFeedOffset = useSelector(selectTagFeedOffset);
-  const { data, isSuccess, isFetching, isLoading, isError } =
-    useGetGlobalFeedQuery({
-      tag: tagName,
-      offset: tagFeedOffset,
-    });
+  const {
+    data,
+    isSuccess,
+    isFetching,
+    isLoading,
+    isError,
+  } = useGetGlobalFeedQuery({
+    tag: tagName,
+    offset: tagFeedOffset,
+  });
 
   function handlePageItemClick(pageId) {
     dispatch(setTagFeedOffset(pageId - 1));
@@ -44,7 +50,7 @@ export default function TagFeed() {
     </>
   ) : isError ? (
     <ErrorPlaceholder />
-  ) : (
-    'is loading...'
-  );
+  ) : isFetching ? (
+    <ArticleListPlaceholder articlesCount={4} />
+  ) : null;
 }

@@ -10,14 +10,20 @@ import {
 import { useGetSubscribedFeedQuery } from 'services/api';
 import ArticleList from 'components/ArticleList';
 import Pagination from 'components/Pagination';
+import ArticleListPlaceholder from 'components/ArticleListPlaceholder';
 
 export default function SubscribedFeed() {
   const dispatch = useDispatch();
   const subscribedFeedOffset = useSelector(selectSubscribedFeedOffset);
-  const { data, isSuccess, isFetching, isLoading, isError } =
-    useGetSubscribedFeedQuery({
-      offset: subscribedFeedOffset,
-    });
+  const {
+    data,
+    isSuccess,
+    isFetching,
+    isLoading,
+    isError,
+  } = useGetSubscribedFeedQuery({
+    offset: subscribedFeedOffset,
+  });
 
   function handlePageItemClick(pageId) {
     dispatch(setSubscribedFeedOffset(pageId - 1));
@@ -41,7 +47,7 @@ export default function SubscribedFeed() {
     </>
   ) : isError ? (
     <ErrorPlaceholder />
-  ) : (
-    'is loading...'
-  );
+  ) : isFetching ? (
+    <ArticleListPlaceholder articlesCount={4} />
+  ) : null;
 }

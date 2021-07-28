@@ -1,13 +1,13 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import LoginPage from '../LoginPage';
-import RegisterPage from '../RegisterPage';
-import HomePage from '../HomePage';
-import ProfilePage from '../ProfilePage';
-import SettingsPage from '../SettingPage';
-import ArticlePage from '../ArticlePage';
-import EditorPage from '../EditorPage';
-import PrivateRoute from 'components/PrivateRoute';
+import LoginPage from 'pages/LoginPage';
+import RegisterPage from 'pages/RegisterPage';
+import HomePage from 'pages/HomePage';
+import ProfilePage from 'pages/ProfilePage';
+import SettingsPage from 'pages/SettingPage';
+import ArticlePage from 'pages/ArticlePage';
+import EditorPage from 'pages/EditorPage';
+import PrivateRoute from '../PrivateRoute';
 
 export default function PagesRouting() {
   return (

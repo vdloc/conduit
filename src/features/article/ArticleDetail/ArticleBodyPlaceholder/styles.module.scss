@@ -1,0 +1,17 @@
+.body {
+  padding-bottom: 1em;
+
+  & > * {
+    margin-top: 5px;
+  }
+}
+
+.meta {
+  display: flex;
+  justify-content: center;
+  padding: 1em;
+
+  & > * {
+    margin-right: 5px;
+  }
+}

@@ -1,5 +1,7 @@
 import Avatar from 'components/Avatar';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from 'store/slices/userSlice';
 import ArticleComment from '../ArticleComment';
 
 export default function ArticleComments({
@@ -9,6 +11,7 @@ export default function ArticleComments({
   onSubmitComment,
   onDeleteComment,
 }) {
+  const currentUser = useSelector(selectCurrentUser);
   return (
     <div className='row'>
       <div className='col-xs-12 col-md-8 offset-md-2'>
@@ -24,21 +27,20 @@ export default function ArticleComments({
           <div className='card-footer'>
             <Avatar
               className='comment-author-img'
-              src={image}
-              alt={currentUsername}
+              src={currentUser.image}
+              alt={currentUser.username}
             />
+            <span style={{ display: 'inline-block', marginLeft: '0.5em' }}>
+              {currentUser.username}
+            </span>
             <button className='btn btn-sm btn-primary' type='submit'>
               Post Comment
             </button>
           </div>
         </form>
         {comments.map((comment) => {
-          const {
-            id,
-            createdAt,
-            body,
-            author: { username, image } = {},
-          } = comment || {};
+          const { id, createdAt, body, author: { username, image } = {} } =
+            comment || {};
 
           return (
             <ArticleComment

@@ -1,0 +1,12 @@
+.Placeholder {
+  animation: color-change 0.5s linear infinite alternate both;
+}
+
+@keyframes color-change {
+  from {
+    background-color: #cbcac4;
+  }
+  to {
+    background-color: #cbcac44d;
+  }
+}

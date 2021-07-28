@@ -10,15 +10,21 @@ import {
 import { useGetGlobalFeedQuery } from 'services/api';
 import ArticleList from 'components/ArticleList';
 import Pagination from 'components/Pagination';
+import ArticleListPlaceholder from 'components/ArticleListPlaceholder';
 
 export default function UserOwnedFeed({ username }) {
   const dispatch = useDispatch();
   const ownFeedOffset = useSelector(selectOwnFeedOffset);
-  const { data, isSuccess, isFetching, isLoading, isError } =
-    useGetGlobalFeedQuery({
-      offset: ownFeedOffset,
-      author: username,
-    });
+  const {
+    data,
+    isSuccess,
+    isFetching,
+    isLoading,
+    isError,
+  } = useGetGlobalFeedQuery({
+    offset: ownFeedOffset,
+    author: username,
+  });
 
   function handlePageItemClick(pageId) {
     dispatch(setOwnFeedOffset(pageId - 1));
@@ -42,7 +48,7 @@ export default function UserOwnedFeed({ username }) {
     </>
   ) : isError ? (
     <ErrorPlaceholder />
-  ) : (
-    'is loading...'
-  );
+  ) : isFetching ? (
+    <ArticleListPlaceholder articlesCount={3} />
+  ) : null;
 }

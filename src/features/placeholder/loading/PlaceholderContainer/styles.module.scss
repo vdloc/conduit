@@ -1,0 +1,14 @@
+.PlaceholderContainer {
+  & [class*='Placeholder'] {
+    animation: color-change 1s linear infinite alternate-reverse;
+  }
+}
+
+@keyframes color-change {
+  from {
+    background-color: #a7a6a1;
+  }
+  to {
+    background-color: #cecbbea6;
+  }
+}

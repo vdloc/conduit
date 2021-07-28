@@ -1,0 +1,16 @@
+.info {
+  display: flex;
+  margin: 2rem 0 0;
+}
+
+.meta {
+  &Item {
+    &:not(:first-child) {
+      margin-top: 5px;
+    }
+  }
+}
+
+.description {
+  margin-top: 1rem;
+}

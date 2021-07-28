@@ -10,15 +10,21 @@ import {
 import useErrorNotification from 'hooks/useErrorNotification';
 import ErrorPlaceholder from 'components/ErrorPlaceholder';
 import useDisplayLoaderWhileFetch from 'hooks/useDisplayLoaderWhileFetch';
+import ArticleListPlaceholder from 'components/ArticleListPlaceholder';
 
 export default function FavoriteFeed({ username }) {
   const dispatch = useDispatch();
   const favoriteFeedOffset = useSelector(selectFavoriteFeedOffset);
-  const { data, isSuccess, isFetching, isLoading, isError } =
-    useGetGlobalFeedQuery({
-      favorited: username,
-      offset: favoriteFeedOffset,
-    });
+  const {
+    data,
+    isSuccess,
+    isFetching,
+    isLoading,
+    isError,
+  } = useGetGlobalFeedQuery({
+    favorited: username,
+    offset: favoriteFeedOffset,
+  });
 
   function handlePageItemClick(pageId) {
     dispatch(setFavoriteFeedOffset(pageId - 1));
@@ -42,7 +48,7 @@ export default function FavoriteFeed({ username }) {
     </>
   ) : isError ? (
     <ErrorPlaceholder />
-  ) : (
-    'is loading...'
-  );
+  ) : isFetching ? (
+    <ArticleListPlaceholder articlesCount={3} />
+  ) : null;
 }

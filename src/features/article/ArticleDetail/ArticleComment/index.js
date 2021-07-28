@@ -21,7 +21,11 @@ export default function ArticleComment({
         <Link className='comment-author' to={profileLink}>
           <Avatar className='comment-author-img' src={image} alt={username} />
         </Link>{' '}
-        <Link className='comment-author' to={profileLink}>
+        <Link
+          className='comment-author'
+          to={profileLink}
+          style={{ marginLeft: '0.5em' }}
+        >
           {username}
         </Link>{' '}
         <span className='date-posted'>{createdAt}</span>

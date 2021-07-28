@@ -1,7 +1,6 @@
-import { useDispatch } from 'react-redux';
 import { useGetCurrentUserQuery } from 'services/api';
 import { getToken } from 'utils/utils';
-import PagesRouting from 'pages/PagesRouting';
+import PagesRouting from 'features/routing/PagesRouting';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ToastWrapper from 'components/ToastWrapper';

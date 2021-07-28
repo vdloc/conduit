@@ -1,0 +1,23 @@
+.PlaceHolderItem {
+  &Wrapper {
+    padding: 1.5rem 0;
+  }
+  &Meta {
+    margin: 0 0 1rem;
+    display: flex;
+  }
+  &Info {
+    margin: 0 1.5rem 0 0.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  &Content {
+    display: flex;
+    flex-direction: column;
+
+    & > *:not(:first-child) {
+      margin-top: 4px;
+    }
+  }
+}

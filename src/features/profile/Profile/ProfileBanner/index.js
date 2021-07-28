@@ -8,10 +8,11 @@ import {
   useGetUserProfileQuery,
   useUnfollowUserMutation,
 } from 'services/api';
+import ProfileBannerPlaceholder from './ProfileBannerPlaceholder';
 
 export default function ProfileBanner({ username }) {
   const currentUser = useSelector(selectCurrentUser);
-  const { data: profile } = useGetUserProfileQuery(username);
+  const { data: profile, isFetching } = useGetUserProfileQuery(username);
   const [followUser] = useFollowUserMutation();
   const [unfollowUser] = useUnfollowUserMutation();
 
@@ -23,50 +24,56 @@ export default function ProfileBanner({ username }) {
     await unfollowUser(username);
   }
 
-  return profile ? (
+  return (
     <div className='user-info'>
       <div className='container'>
         <div className='row'>
           <div className='col-xs-12 col-md-10 offset-md-1'>
-            <Avatar
-              src={profile.image}
-              className='user-img'
-              alt={profile.username}
-            />
-            <h4>{profile.username}</h4>
-            <p>{profile.bio}</p>
-            {currentUser?.username === username ? (
-              <Link
-                className='btn btn-sm btn-outline-secondary action-btn'
-                to='/setting'
-              >
-                <i className='ion-gear-a'></i>
-                &nbsp; Edit Profile Settings
-              </Link>
-            ) : (
-              <button
-                className='btn btn-sm btn-outline-secondary action-btn'
-                onClick={
-                  profile.following ? handleUnfollowUser : handleFollowUser
-                }
-              >
-                {profile.following ? (
-                  <>
-                    <i className='ion-minus-round'></i>
-                    &nbsp;Unfollow
-                  </>
+            {isFetching ? (
+              <ProfileBannerPlaceholder />
+            ) : profile ? (
+              <>
+                <Avatar
+                  src={profile.image}
+                  className='user-img'
+                  alt={profile.username}
+                />
+                <h4>{profile.username}</h4>
+                <p>{profile.bio}</p>
+                {currentUser?.username === username ? (
+                  <Link
+                    className='btn btn-sm btn-outline-secondary action-btn'
+                    to='/setting'
+                  >
+                    <i className='ion-gear-a'></i>
+                    &nbsp; Edit Profile Settings
+                  </Link>
                 ) : (
-                  <>
-                    <i className='ion-plus-round'></i>
-                    &nbsp; Follow
-                  </>
+                  <button
+                    className='btn btn-sm btn-outline-secondary action-btn'
+                    onClick={
+                      profile.following ? handleUnfollowUser : handleFollowUser
+                    }
+                  >
+                    {profile.following ? (
+                      <>
+                        <i className='ion-minus-round'></i>
+                        &nbsp;Unfollow
+                      </>
+                    ) : (
+                      <>
+                        <i className='ion-plus-round'></i>
+                        &nbsp; Follow
+                      </>
+                    )}
+                    {profile.username}
+                  </button>
                 )}
-                {profile.username}
-              </button>
-            )}
+              </>
+            ) : null}
           </div>
         </div>
       </div>
     </div>
-  ) : null;
+  );
 }
