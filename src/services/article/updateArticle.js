@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router';
-import { createQueryTags } from 'services/apiUtils';
-import { ENDPOINTS, TAG_TYPES } from 'services/constants';
+import { ENDPOINTS, TAG_TYPES } from '@/constants';
+import { createQueryTags } from 'utils/query';
 
 function resultTagsReducer(_result, args) {
   const { slug } = args;
@@ -9,7 +9,7 @@ function resultTagsReducer(_result, args) {
 }
 
 const updateArticleMutation = {
-  queryFn: async ({ slug, data }, { dispatch }, _options, baseQuery) => {    
+  queryFn: async ({ slug, data }, { dispatch }, _options, baseQuery) => {
     const updateArticleResult = await baseQuery({
       method: 'POST',
       url: `${ENDPOINTS.ARTICLES}/${slug}`,

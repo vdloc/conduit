@@ -1,4 +1,4 @@
-import { ENDPOINTS } from '../constants';
+import { ENDPOINTS } from '@/constants';
 
 const getTagsQuery = {
   query: () => ENDPOINTS.TAGS,

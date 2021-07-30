@@ -1,5 +1,5 @@
-import { ENDPOINTS, TAG_TYPES, GENERAL_FEED_TAG } from '../constants';
-import { createQueryTags } from 'services/apiUtils';
+import { ENDPOINTS, TAG_TYPES, GENERAL_FEED_TAG } from '@/constants';
+import { createQueryTags } from '@/utils/query';
 import { push } from 'connected-react-router';
 
 function resultTagsReducer(_result, _args) {

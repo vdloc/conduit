@@ -1,5 +1,5 @@
-import { createQueryTags } from 'services/apiUtils';
-import { ENDPOINTS, generalFeedTags, TAG_TYPES } from 'services/constants';
+import { ENDPOINTS, generalFeedTags, TAG_TYPES } from '@/constants';
+import { createQueryTags } from 'utils/query';
 
 function resultTagsReducer(_result, slug) {
   return [{ id: slug, type: TAG_TYPES.POST }];

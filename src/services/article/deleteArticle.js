@@ -1,7 +1,7 @@
 import { push } from 'connected-react-router';
-import { createQueryTags } from 'services/apiUtils';
-import { ENDPOINTS, generalFeedTags } from 'services/constants';
-import { errorToast } from 'utils/toast';
+import { ENDPOINTS, generalFeedTags } from '@/constants';
+import { errorToast } from 'libs/toast';
+import { createQueryTags } from 'utils/query';
 
 const deleteArticleMutation = {
   queryFn: async (slug, { dispatch }, _options, baseQuery) => {

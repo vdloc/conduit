@@ -1,7 +1,9 @@
 import React from 'react';
-import PlaceholderAvatar from 'features/placeholder/loading/PlaceholderAvatar';
-import PlaceholderContainer from 'features/placeholder/loading/PlaceholderContainer';
-import PlaceholderRow from 'features/placeholder/loading/PlaceholderRow';
+
+import PlaceholderAvatar from 'components/Placeholder/PlaceholderAvatar';
+import PlaceholderContainer from 'components/Placeholder/PlaceholderContainer';
+import PlaceholderRow from 'components/Placeholder/PlaceholderRow';
+
 import styles from './styles.module.scss';
 
 export default function ArticleListItemPlaceholder() {

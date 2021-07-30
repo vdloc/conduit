@@ -1,7 +1,7 @@
 import { push } from 'connected-react-router';
-import { welcomeToast } from 'utils/toast';
-import { saveToken } from 'utils/utils';
-import { ENDPOINTS } from '../constants';
+import { welcomeToast } from 'libs/toast';
+import { saveToken } from 'utils/storage';
+import { ENDPOINTS } from '@/constants';
 
 const registerMutation = {
   queryFn: async (args, { dispatch }, _options, baseQuery) => {

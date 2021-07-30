@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   useFavoriteArticleMutation,
   useUnfavoriteArticleMutation,
-} from 'services/api';
+} from 'services';
 import Avatar from 'components/Avatar';
 import TagList from 'components/TagList';
 

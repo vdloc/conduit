@@ -1,8 +1,8 @@
 import { push } from 'connected-react-router';
-import { createQueryTags } from 'services/apiUtils';
-import { welcomeToast } from 'utils/toast';
-import { saveToken } from 'utils/utils';
-import { ENDPOINTS, TAG_TYPES } from '../constants';
+import { welcomeToast } from 'libs/toast';
+import { saveToken } from 'utils/storage';
+import { ENDPOINTS, TAG_TYPES } from '@/constants';
+import { createQueryTags } from 'utils/query';
 
 // When login is success (have result),
 // re-invalidate all failed before requests which are marked with UNAUTHORIZED tag.

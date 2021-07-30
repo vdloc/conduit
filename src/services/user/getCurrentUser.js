@@ -1,5 +1,5 @@
-import { createQueryTags } from 'services/apiUtils';
-import { ENDPOINTS, TAG_TYPES } from '../constants';
+import { ENDPOINTS, TAG_TYPES } from '@/constants';
+import { createQueryTags } from 'utils/query';
 
 function resultTagsReducer(result) {
   const { user: { username = '' } = {} } = result;

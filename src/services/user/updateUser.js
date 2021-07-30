@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router';
-import { createQueryTags } from 'services/apiUtils';
-import { ENDPOINTS, TAG_TYPES } from 'services/constants';
+import { createQueryTags } from 'utils/query';
+import { ENDPOINTS, TAG_TYPES } from '@/constants';
 
 function resultTagsReducer(_result, user) {
   return [{ type: TAG_TYPES.PROFILE, id: user.username }];
