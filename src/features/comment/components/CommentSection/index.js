@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDeleteCommentMutation, useGetArticleCommentsQuery } from 'services';
 import Comment from '../Comment';
 import CommentBox from '../CommentBox';

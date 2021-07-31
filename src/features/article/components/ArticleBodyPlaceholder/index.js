@@ -1,5 +1,3 @@
-import React from 'react';
-
 import PlaceholderAvatar from 'components/Placeholder/PlaceholderAvatar';
 import PlaceholderContainer from 'components/Placeholder/PlaceholderContainer';
 import PlaceholderRow from 'components/Placeholder/PlaceholderRow';

@@ -1,4 +1,3 @@
-import React from 'react';
 import ArticleListItemPlaceholder from 'components/ArticleListItemPlaceholder';
 
 export default function ArticleListPlaceholder({ articlesCount = 0 }) {

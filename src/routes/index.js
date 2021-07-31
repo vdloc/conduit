@@ -1,4 +1,3 @@
-import React from 'react';
 import { Switch, Redirect } from 'react-router-dom';
 
 import ArticleRoutes from 'features/article/routes';

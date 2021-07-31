@@ -1,6 +1,4 @@
-import React from 'react';
 import ReactMarkdown from 'react-markdown';
-
 import TagList from 'components/TagList';
 
 export default function ArticleBody({ body, tags }) {

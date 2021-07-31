@@ -1,4 +1,3 @@
-import React from 'react';
 import Article from '../ArticleListItem';
 
 export default function ArticleList({ articles }) {

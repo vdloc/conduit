@@ -1,4 +1,3 @@
-import React from 'react';
 import SettingForm from '../SettingForm';
 
 export default function Setting() {

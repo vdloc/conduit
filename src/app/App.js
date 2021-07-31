@@ -2,7 +2,7 @@ import { getToken } from 'utils/storage';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Toast from 'components/Toast';
-import Loader from 'components/Loader';
+import { Loader } from 'features/loader';
 import AppRoutes from 'routes';
 import { useGetCurrentUserQuery } from 'services';
 

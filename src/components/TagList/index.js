@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function TagList({ tags }) {
   if (!tags?.length) return null;
 

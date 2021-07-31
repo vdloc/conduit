@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import style from './styles.module.scss';
 
 const PLACEHOLDER_IMAGE_SRC =

@@ -1,4 +1,3 @@
-import React from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './ToastWrapper.scss';
