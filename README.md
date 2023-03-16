@@ -1,3 +1,3 @@
-# Beterr Conduit
+# Better Conduit
 --- 
 
